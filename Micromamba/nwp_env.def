@@ -2,7 +2,7 @@ Bootstrap: docker
 From: mambaorg/micromamba:1.5.8
 
 %labels
-    APPLICATION1_NAME MET-tools-py
+    APPLICATION1_NAME Micromamba NWP Env
     APPLICATION1_URL 
     APPLICATION1_VERSION 1.0
 
@@ -36,9 +36,9 @@ From: mambaorg/micromamba:1.5.8
 %post -c /bin/bash 
 
     # Install environment at prefix
-    micromamba install -y -n base -f /opt/MET-tools-py.yml && \
+    micromamba install -y -n base -f /opt/nwp_env.yml && \
     micromamba clean --all --yes 
-    rm -f /opt/MET-tools-py.yml
+    rm -f /opt/nwp_env.yml
 
 %runscript
     #!/bin/bash
