@@ -1,0 +1,14 @@
+name: nwp_env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.1
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - cartopy
+  - jupyter
+  - netcdf4
+  - xarray
+  - scipy

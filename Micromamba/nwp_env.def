@@ -1,0 +1,49 @@
+Bootstrap: docker
+From: mambaorg/micromamba:1.5.8
+
+%labels
+    APPLICATION1_NAME MET-tools-py
+    APPLICATION1_URL 
+    APPLICATION1_VERSION 1.0
+
+    APPLICATION2_NAME micromamba-docker
+    APPLICATION2_URL https://github.com/mamba-org/micromamba-docker
+    APPLICATION2_VERSION 1.5.8
+
+    AUTHOR_NAME Corrine DeCiampa
+    AUTHOR_EMAIL cdeciampa@ucsd.edu
+
+    CO_AUTHOR_NAME Colin Grudzien
+    CO_AUTHOR_EMAIL cgrudzien@ucsd.edu
+
+    CO_AUTHOR_NAME Jozette Conti
+    CO_AUTHOR_EMAIL jlconti@ucsd.edu
+
+    CO_AUTHOR_NAME Patrick Mulrooney
+    CO_AUTHOR_EMAIL pmulrooney@ucsd.edu
+
+    LAST_UPDATED 2024.07.18
+
+%files
+    # Import yml specs
+    ./nwp_env.yml /opt
+
+%environment
+    # export generic path to bind work scripts / modules to
+    export PATH="${MAMBA_ROOT_PREFIX}/bin:$PATH"
+    export PYTHONPATH=${PYTHONPATH}:/scrpt_dir
+
+%post -c /bin/bash 
+
+    # Install environment at prefix
+    micromamba install -y -n base -f /opt/MET-tools-py.yml && \
+    micromamba clean --all --yes 
+    rm -f /opt/MET-tools-py.yml
+
+%runscript
+    #!/bin/bash
+
+    # Activate environment at system profile level for exec/ run/ instance/ shell
+    # provides Python libraries and all backends
+    source /usr/local/bin/_activate_current_env.sh
+
